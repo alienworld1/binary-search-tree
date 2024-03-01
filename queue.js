@@ -12,4 +12,8 @@ export default class Queue {
     dequeue() {
         return this.#queue.shift();
     }
+
+    get isEmpty() {
+        return (this.#queue.length === 0);
+    }
 }

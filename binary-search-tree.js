@@ -1,3 +1,5 @@
+import Queue from "./queue.js";
+
 function Node(data, left=null, right=null) {
     return {data, left, right};
 }
@@ -115,6 +117,26 @@ export default class BinarySearchTree {
 
     find(value) {
       return search(value, this.#root);
+    }
+    
+    levelOrder(callback) {
+      const nodeQueue = new Queue();
+      let node = this.#root;
+
+      nodeQueue.enqueue(node);
+
+      while (!nodeQueue.isEmpty) {
+        node = nodeQueue.dequeue();
+        if (node.left) {
+          nodeQueue.enqueue(node.left);
+        }
+
+        if (node.right) {
+          nodeQueue.enqueue(node.right);
+        }
+
+        callback(node);
+      }
     }
 
 }

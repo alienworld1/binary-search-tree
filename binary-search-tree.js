@@ -94,6 +94,36 @@ const search = (value, node) => {
   }
 }
 
+const preorder = (callback, node) => {
+  if (!node) {
+    return null;
+  }
+
+  callback(node);
+  preorder(callback, node.left);
+  preorder(callback, node.right);
+}
+
+const inorder = (callback, node) => {
+  if (!node) {
+    return null;
+  }
+
+  inorder(callback, node.left);
+  callback(node);
+  inorder(callback, node.right);
+}
+
+const postorder = (callback, node) => {
+  if (!node) {
+    return null;
+  }
+
+  postorder(callback, node.left);
+  postorder(callback, node.right);
+  callback(node);
+}
+
 export default class BinarySearchTree {
 
     #root;
@@ -147,6 +177,48 @@ export default class BinarySearchTree {
       if (!callback) {
         return result;
       }
+    }
+
+    preOrder(callback) {
+      const array = [];
+
+      if (!callback) {
+        callback = node => {
+          array.push(node.data);
+        };
+      }
+
+      preorder(callback, this.#root);
+
+      if (array.length > 0) return array;
+    }
+
+    inOrder(callback) {
+      const array = [];
+
+      if (!callback) {
+        callback = node => {
+          array.push(node.data);
+        };
+      }
+
+      inorder(callback, this.#root);
+
+      if (array.length > 0) return array;
+    }
+
+    postOrder(callback) {
+      const array = [];
+
+      if (!callback) {
+        callback = node => {
+          array.push(node.data);
+        };
+      }
+
+      postorder(callback, this.#root);
+
+      if (array.length > 0) return array;
     }
 
 }

@@ -17,6 +17,67 @@ const buildTree = (array, low = 0, high) => {
     return root;
 }
 
+const insert = (data, node) => {
+  if (!node) {
+    return Node(data);
+  }
+
+  if (data === node.data) {
+    return node;
+  }
+
+  else if (data > node.data) {
+    node.right = insert(data, node.right);
+  }
+
+  else {
+    node.left = insert(data, node.left);
+  }
+
+  return node;
+}
+
+const inorderSuccessor = (node) => {
+  let current = node;
+  while (current.left) {
+    current = current.left;
+  }
+  return current;
+}
+
+const deleteItem = (root, data) => {
+  if (!root) return root;
+
+  if (data < root.data) {
+    root.left = deleteItem(root.left, data);
+  }
+  else if (data > root.data) {
+    root.right = deleteItem(root.right, data);
+  }
+  else {
+    if (!root.left) {
+      const temp = root.right;
+      root = null;
+      return temp;
+    }
+
+    else if (!root.right) {
+      const temp = root.left;
+      root = null;
+      return temp;
+    }
+
+    else {
+      const temp = inorderSuccessor(root.right);
+      root.data = temp.data;
+      root.right = deleteItem(root.right, temp.data);
+    }
+  }
+
+  return root;
+
+}
+
 export default class BinarySearchTree {
 
     #root;
@@ -30,6 +91,13 @@ export default class BinarySearchTree {
         return this.#root;
     }
 
+    insert(data) {
+      insert(data, this.#root);
+    }
+
+    deleteItem(data) {
+      this.#root = deleteItem(this.#root, data);
+    }
 
 }
 

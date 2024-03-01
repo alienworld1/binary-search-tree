@@ -221,6 +221,23 @@ export default class BinarySearchTree {
       if (array.length > 0) return array;
     }
 
+    height(node) {
+      let leftCount = 0;
+      let rightCount = 0;
+
+      if (node.left) {
+        leftCount++;
+        leftCount += this.height(node.left);
+      }
+
+      if (node.right) {
+        rightCount++;
+        rightCount += this.height(node.right);
+      }
+
+      return (leftCount > rightCount)? leftCount: rightCount;
+    }
+
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {

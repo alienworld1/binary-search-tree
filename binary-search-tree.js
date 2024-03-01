@@ -78,6 +78,20 @@ const deleteItem = (root, data) => {
 
 }
 
+const search = (value, node) => {
+  if (!node) return null;
+
+  if (node.data === value) {
+    return node;
+  }
+  else if (value > node.data) {
+    return search(value, node.right);
+  }
+  else {
+    return search(value, node.left);
+  }
+}
+
 export default class BinarySearchTree {
 
     #root;
@@ -97,6 +111,10 @@ export default class BinarySearchTree {
 
     deleteItem(data) {
       this.#root = deleteItem(this.#root, data);
+    }
+
+    find(value) {
+      return search(value, this.#root);
     }
 
 }

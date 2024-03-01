@@ -94,6 +94,20 @@ const search = (value, node) => {
   }
 }
 
+const count = (node, root, c = 0) => {
+  if (!node) return c;
+
+  if (root.data === node.data) {
+    return c;
+  }
+  else if (node.data > root.data) {
+    return count(node, root.right, c + 1);
+  }
+  else {
+    return count(node, root.left, c + 1);
+  }
+}
+
 const preorder = (callback, node) => {
   if (!node) {
     return null;
@@ -236,6 +250,10 @@ export default class BinarySearchTree {
       }
 
       return (leftCount > rightCount)? leftCount: rightCount;
+    }
+
+    depth(node) {
+      return count(node, this.#root);
     }
 
 }

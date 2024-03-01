@@ -122,6 +122,7 @@ export default class BinarySearchTree {
     levelOrder(callback) {
       const nodeQueue = new Queue();
       let node = this.#root;
+      const result = [];
 
       nodeQueue.enqueue(node);
 
@@ -135,7 +136,16 @@ export default class BinarySearchTree {
           nodeQueue.enqueue(node.right);
         }
 
-        callback(node);
+        if (callback) {
+          callback(node);
+        }
+        else {
+          result.push(node.data);
+        }
+      }
+
+      if (!callback) {
+        return result;
       }
     }
 

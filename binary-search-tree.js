@@ -236,6 +236,8 @@ export default class BinarySearchTree {
     }
 
     height(node) {
+      if (!node) return 0;
+
       let leftCount = 0;
       let rightCount = 0;
 
@@ -254,6 +256,21 @@ export default class BinarySearchTree {
 
     depth(node) {
       return count(node, this.#root);
+    }
+
+    #nodeIsBalanced(node) {
+      if (!node) return true;
+
+      const leftHeight = this.height(node.left)
+      const rightHeight = this.height(node.right);
+
+      if (Math.abs(leftHeight - rightHeight) > 1) return false;
+
+      return this.#nodeIsBalanced(node.left) && this.#nodeIsBalanced(node.right);
+    }
+
+    get isBalanced() {
+      return this.#nodeIsBalanced(this.#root);
     }
 
 }

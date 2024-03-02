@@ -273,6 +273,11 @@ export default class BinarySearchTree {
       return this.#nodeIsBalanced(this.#root);
     }
 
+    rebalance() {
+      const sortedArray = this.inOrder();
+      this.#root = buildTree(sortedArray);
+    }
+
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
